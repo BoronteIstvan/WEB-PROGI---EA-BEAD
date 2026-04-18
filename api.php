@@ -4,10 +4,10 @@ header("Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json; charset=UTF-8");
 
-$host = 'localhost';
-$db   = 'radio_db';
-$user = 'root';
-$pass = '';
+$host = 'mysql.nethely.hu';
+$db   = 'adok';   
+$user = 'fel1'; 
+$pass = 'Asd123asd';       
 
 
 try {
