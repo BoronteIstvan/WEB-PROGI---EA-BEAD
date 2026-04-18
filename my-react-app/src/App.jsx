@@ -42,7 +42,7 @@ function App() {
   const [view, setView] = useState("axios")
   const [adok, setAdok] = useState([])
   const [form, setForm] = useState({ freq: '', channel: '' })
-  const API_URL = "http://localhost/BEAD/api.php"
+  const API_URL = "http://fel1.nethely.hu/api.php"
 
   const frissit = () => { axios.get(API_URL).then(res => setAdok(res.data)) }
   useEffect(() => { if(view === "axios") frissit() }, [view])
