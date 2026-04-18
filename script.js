@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 var selectedIndex = null;
 var array1 = new Array();
 array1.push({"Frekvencia":"87,6	7,6","teljesitmeny":"Neo FM 	Győr","csatorna":"Szabadhegy","adohely":" "});
