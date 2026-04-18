@@ -4,10 +4,10 @@ header("Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json; charset=UTF-8");
 
-$host = 'localhost';
-$db   = 'radio_db';
-$user = 'root';
-$pass = '';
+$host = 'mysql.nethely.hu'; // vagy amit a Nethely ír
+$db   = 'adok';
+$user = 'fel1'; // a képed alapján
+$pass = 'Asd123asd';
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $pass);
