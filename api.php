@@ -6,7 +6,7 @@ header("Content-Type: application/json; charset=UTF-8");
 
 // --- NETHELY ADATBÁZIS BEÁLLÍTÁSOK ---
 $host = 'mysql.nethely.hu';
-$db   = 'fel1';       // A képeden látható "Adatbázis" mező értéke
+$db   = 'radio_db';       // A képeden látható "Adatbázis" mező értéke
 $user = 'fel1';       // A képeden látható "Felhasználó" mező értéke
 $pass = 'Asd123asd'; 
 
