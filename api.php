@@ -6,9 +6,9 @@ header("Content-Type: application/json; charset=UTF-8");
 
 // --- NETHELY ADATBÁZIS BEÁLLÍTÁSOK ---
 $host = 'mysql.nethely.hu';
-$db   = 'radio_db';       // A képeden látható "Adatbázis" mező értéke
-$user = 'fel1';       // A képeden látható "Felhasználó" mező értéke
-$pass = 'Asd123asd'; 
+$db   = 'fel1_radio';  // <--- EZT ÍRD BE, ne a radio_db-t!
+$user = 'fel1';
+$pass = 'Asd123asd';
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $pass);
