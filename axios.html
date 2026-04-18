@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Axios CRUD</title>
+    <link rel="stylesheet" href="stilus.css">
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <nav style="background-color: #FF6600; padding: 10px;">
+        <ul style="display: flex; list-style: none; margin: 0; padding: 0;">
+            <li style="margin-right: 20px;"><a href="index.html" style="color: white; text-decoration: none;">Főoldal</a></li>
+            <li style="margin-right: 20px;"><a href="javascript.html" style="color: white; text-decoration: none;">JS CRUD</a></li>
+            <li style="margin-right: 20px;"><a href="react.html" style="color: white; text-decoration: none;">React CRUD</a></li>
+            <li style="margin-right: 20px;"><a href="spa.html" style="color: white; text-decoration: none;">SPA Játékok</a></li>
+            <li style="margin-right: 20px;"><a href="fetchapi.html" style="color: white; text-decoration: none;">Fetch API</a></li>
+            <li style="margin-right: 20px;"><a href="axios.html" style="color: white; text-decoration: none;font-weight: bold;">Axios CRUD</a></li>
+            <li style="margin-right: 20px;"><a href="oojs.html" style="color: white; text-decoration: none;">OOJS</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <h1 style="color: white; margin: 0;">Axios CRUD</h1>
+    </header>
+
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        function AxiosApp() {
+            const [data, setData] = useState([]);
+            const url = "api.php";
+
+            const fetchItems = () => {
+                axios.get(url).then(res => setData(res.data));
+            };
+
+            useEffect(() => { fetchItems(); }, []);
+
+            const remove = (id) => {
+                axios.delete(`${url}?id=${id}`).then(() => fetchItems());
+            };
+
+            return (
+                <div style={{padding: "20px", background: "white", color: "black", borderRadius: "10px", margin: "20px"}}>
+                    <h2>Axios CRUD (Szerver oldali)</h2>
+                    <table border="1" width="100%">
+                        <thead>
+                            <tr><th>Csatorna</th><th>Művelet</th></tr>
+                        </thead>
+                        <tbody>
+                            {data.map(item => (
+                                <tr key={item.id}>
+                                    <td>{item.channel}</td>
+                                    <td><button onClick={() => remove(item.id)}>Törlés</button></td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                    <br/><a href="index.html">Vissza</a>
+                </div>
+            );
+        }
+        ReactDOM.createRoot(document.getElementById('root')).render(<AxiosApp />);
+    </script>
+</body>
+</html>
