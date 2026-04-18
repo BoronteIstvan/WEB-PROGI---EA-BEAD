@@ -6,14 +6,16 @@ header("Content-Type: application/json; charset=UTF-8");
 
 // --- NETHELY ADATBÁZIS BEÁLLÍTÁSOK ---
 $host = 'mysql.nethely.hu';
-$db   = 'fel1_radio';  // <--- EZT ÍRD BE, ne a radio_db-t!
+$db   = 'fel1_radio';  // <--- A Nethelyen ez a "radio_db" megfelelője (felhasználónév_adatbázisnév)
 $user = 'fel1';
 $pass = 'Asd123asd';
 
 try {
+    // Kapcsolódás a PDO segítségével
     $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $pass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
+    // Hiba esetén JSON formátumban válaszolunk
     die(json_encode(["error" => "Kapcsolódási hiba: " . $e->getMessage()]));
 }
 
@@ -31,9 +33,9 @@ if ($method == 'POST') {
     if($data) {
         $stmt = $pdo->prepare("INSERT INTO adok (freq, power, channel, location) VALUES (?, ?, ?, ?)");
         $stmt->execute([
-            $data->freq, 
+            $data->freq ?? '', 
             $data->power ?? '', 
-            $data->channel, 
+            $data->channel ?? '', 
             $data->location ?? ''
         ]);
         echo json_encode(["status" => "success"]);
@@ -50,7 +52,7 @@ if ($method == 'DELETE') {
     }
 }
 
-// Az OPTIONS kérés kezelése a CORS miatt
+// Az OPTIONS kérés kezelése a CORS (keresztlekérés) miatt
 if ($method == 'OPTIONS') {
     http_response_code(200);
     exit;
