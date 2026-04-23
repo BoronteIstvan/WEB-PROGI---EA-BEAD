@@ -1,6 +1,6 @@
 const { useState } = React;
 
-// Kezdő adatok a kiosztas.txt mintájára
+
 const initialAdok = [
     { id: 1, frekvencia: "87,6", teljesitmeny: "7,6", csatorna: "Neo FM", adohely: "Győr", cim: "Szabadhegy" },
     { id: 2, frekvencia: "87,6", teljesitmeny: "0,5", csatorna: "Gong Rádió", adohely: "Csongrád", cim: "" },
@@ -38,7 +38,7 @@ function App() {
     .then(response => response.json())
     .then(result => {
         if (result.status === "success") {
-            // Ha a PHP visszajelzett, hogy sikerült, csak akkor frissítjük a React felületet
+           
             if (isEditing) {
                 setAdok(adok.map(a => a.id === currentAdo.id ? currentAdo : a));
                 setIsEditing(false);
