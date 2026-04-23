@@ -1,7 +1,7 @@
 var selectedIndex = null;
 var array1 = new Array();
 array1.push({"Frekvencia":"87,6	7,6","teljesitmeny":"Neo FM 	Győr","csatorna":"Szabadhegy","adohely":" "});
-// OR: array1[0]= {"Frekvencia":"John Smith","teljesitmeny":"data1@gmail.com","csatorna":"2000","adohely":"London"};
+
 array1.push({"Frekvencia":"87,6","teljesitmeny":"Kontakt Rádió","csatorna":"Budapest","adohely":"Terézváros "});
 printArray();
 function printArray(){
@@ -43,7 +43,7 @@ function readFormData() {
 
 function insertNewRecord(data) {
     array1.push({"Frekvencia":data.Frekvencia,"teljesitmeny":data.teljesitmeny,"csatorna":data.csatorna,"adohely":data.adohely});
-    // OR: array1[array1.length]= {"Frekvencia":data.Frekvencia,"teljesitmeny":data.teljesitmeny,"csatorna":data.csatorna,"adohely":data.adohely};
+    
     printArray();
 }
 
@@ -70,7 +70,7 @@ function updateRecord(formData) {
 }
 function onDelete(index) {
     if (confirm('Are you sure to delete this record ?')) {
-        array1.splice(index, 1); // Deleting the entry with the specified index
+        array1.splice(index, 1); 
         resetForm();
         printArray();
     }
