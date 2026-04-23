@@ -60,9 +60,9 @@
 <script>
    const API_URL = 'save.php';
 const radioForm = document.getElementById('radioForm');
-let editId = null; // Tároljuk, ha éppen szerkesztünk valakit
+let editId = null; 
 
-// 1. ADATOK LEKÉRÉSE ÉS MEGJELENÍTÉSE
+
 async function fetchRadios() {
     try {
         const response = await fetch(API_URL);
@@ -95,19 +95,19 @@ function displayRadios(data) {
     });
 }
 
-// 2. MENTÉS ÉS MÓDOSÍTÁS (POST / PUT)
+
 radioForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const radioData = {
-        id: editId, // Ha null, akkor új, ha van értéke, akkor módosítás
+        id: editId, 
         Frekvencia: document.getElementById('freq').value,
         teljesitmeny: document.getElementById('power').value,
         csatorna: document.getElementById('channel').value,
         adohely: document.getElementById('location').value
     };
 
-    // Eldöntjük, hogy új adatot küldünk (POST) vagy meglévőt frissítünk (PUT)
+   
     const method = editId ? 'PUT' : 'POST';
 
     try {
@@ -120,14 +120,14 @@ radioForm.addEventListener('submit', async (e) => {
         if (response.ok) {
             alert(editId ? "Sikeres módosítás!" : "Sikeres mentés!");
             resetForm();
-            fetchRadios(); // Táblázat frissítése
+            fetchRadios(); 
         }
     } catch (error) {
         alert("Hiba történt a művelet során!");
     }
 });
 
-// 3. TÖRLÉS
+
 async function deleteRadio(id) {
     if (confirm("Biztosan törölni szeretnéd?")) {
         try {
@@ -139,7 +139,7 @@ async function deleteRadio(id) {
     }
 }
 
-// 4. SZERKESZTÉS ELŐKÉSZÍTÉSE
+
 function editRadio(item) {
     editId = item.id;
     document.getElementById('freq').value = item.freq;
@@ -147,7 +147,7 @@ function editRadio(item) {
     document.getElementById('channel').value = item.channel;
     document.getElementById('location').value = item.location;
     
-    // Gomb szövegének módosítása
+  
     document.querySelector('.btn-save').textContent = "Módosítás mentése";
     document.querySelector('.btn-save').style.background = "#28a745";
 }
@@ -159,7 +159,7 @@ function resetForm() {
     document.querySelector('.btn-save').style.background = "#FF6600";
 }
 
-// Oldal betöltésekor azonnal kérje le az adatokat
+
 fetchRadios();
  
 </script>
