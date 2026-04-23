@@ -1,6 +1,6 @@
 async function fetchRadios() {
     try {
-        const response = await fetch('list.php'); // Kell egy list.php ami SELECT-et csinál
+        const response = await fetch('list.php'); 
         const data = await response.json();
         displayRadios(data);
     } catch (error) {
