@@ -12,11 +12,11 @@ if ($conn->connect_error) {
     die(json_encode(["status" => "error", "message" => "Adatbázis hiba: " . $conn->connect_error]));
 }
 
-// Megnézzük, milyen típusú kérés érkezett (GET, POST, DELETE, PUT)
+
 $method = $_SERVER['REQUEST_METHOD'];
 
 if ($method === 'GET') {
-    // 1. LISTÁZÁS: Ha csak simán megnyitják az oldalt, küldjük el az adatokat
+  
     $sql = "SELECT id, freq, power, channel, location FROM radio_db";
     $result = $conn->query($sql);
     $radios = [];
@@ -29,7 +29,7 @@ if ($method === 'GET') {
     echo json_encode($radios);
 
 } elseif ($method === 'POST') {
-    // 2. MENTÉS: Új adat felvitele
+ 
     $data = json_decode(file_get_contents('php://input'), true);
     
     if ($data) {
@@ -50,7 +50,7 @@ if ($method === 'GET') {
     }
 
 } elseif ($method === 'DELETE') {
-    // 3. TÖRLÉS: Az URL-ben érkező ID alapján
+  
     if (isset($_GET['id'])) {
         $id = intval($_GET['id']);
         $sql = "DELETE FROM radio_db WHERE id = ?";
