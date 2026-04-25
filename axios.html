@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="utf-8">
+    <title>Axios CRUD - Rádióadók</title>
+    <link rel="stylesheet" type="text/css" href="stilus.css">
+    
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+
+    <nav style="background-color: #FF6600; padding: 10px;">
+        <ul style="display: flex; list-style: none; margin: 0; padding: 0;">
+            <li style="margin-right: 20px;"><a href="index.html" style="color: white; text-decoration: none;">Főoldal</a></li>
+            <li style="margin-right: 20px;"><a href="javascript.html" style="color: white; text-decoration: none;">JS CRUD</a></li>
+            <li style="margin-right: 20px;"><a href="react.html" style="color: white; text-decoration: none;">React CRUD</a></li>
+            <li style="margin-right: 20px;"><a href="spa.html" style="color: white; text-decoration: none;">SPA Játékok</a></li>
+            <li style="margin-right: 20px;"><a href="fetchapi.html" style="color: white; text-decoration: none;">Fetch API</a></li>
+            <li style="margin-right: 20px;"><a href="axios.html" style="color: white; text-decoration: none; font-weight: bold;">Axios CRUD</a></li>
+            <li style="margin-right: 20px;"><a href="oojs.html" style="color: white; text-decoration: none;">OOJS</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <h1>Web programozás-1 Előadás Házi feladat</h1>
+        <h1>Rádióadók kezelése (Axios CRUD)</h1>
+    </header>
+
+    <div id="wrapper">
+        <div id="root">
+            </div>
+    </div>
+
+    <footer>
+        <p>Kiss Ferenc: RYRW9B, Börönte István: YA6TJF</p>
+    </footer>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // A te saját MockAPI végpontod
+        const API_URL = "https://69ecc496af4ff533142b58b0.mockapi.io/radiok";
+
+        function AxiosApp() {
+            const [radiok, setRadiok] = useState([]);
+            const [ujRadio, setUjRadio] = useState({ nev: '', frekvencia: '' });
+            const [loading, setLoading] = useState(true);
+
+            // ADATOK LEKÉRÉSE (READ)
+            const adatokBetoltese = async () => {
+                try {
+                    const response = await axios.get(API_URL);
+                    setRadiok(response.data);
+                    setLoading(false);
+                } catch (error) {
+                    console.error("Hiba történt:", error);
+                    setLoading(false);
+                }
+            };
+
+            useEffect(() => {
+                adatokBetoltese();
+            }, []);
+
+            // HOZZÁADÁS (CREATE)
+            const handleSubmit = async (e) => {
+                e.preventDefault();
+                try {
+                    await axios.post(API_URL, ujRadio);
+                    setUjRadio({ nev: '', frekvencia: '' });
+                    adatokBetoltese(); // Frissítés a szerverről
+                } catch (error) {
+                    alert("Hiba a mentésnél!");
+                }
+            };
+
+            // TÖRLÉS (DELETE)
+            const handleTorles = async (id) => {
+                if (confirm("Biztosan törlöd a rádiót?")) {
+                    try {
+                        await axios.delete(`${API_URL}/${id}`);
+                        adatokBetoltese();
+                    } catch (error) {
+                        alert("Hiba a törlésnél!");
+                    }
+                }
+            };
+
+            if (loading) return <div style={{padding: '20px'}}>Adatok szinkronizálása a szerverrel...</div>;
+
+            return (
+                <div style={{padding: '20px'}}>
+                    <h3>Új rádió rögzítése az adatbázisba</h3>
+                    <form onSubmit={handleSubmit} style={{marginBottom: '20px'}}>
+                        <input 
+                            type="text" 
+                            placeholder="Rádió neve" 
+                            value={ujRadio.nev}
+                            onChange={(e) => setUjRadio({...ujRadio, nev: e.target.value})}
+                            required 
+                            style={{padding: '8px', marginRight: '10px'}}
+                        />
+                        <input 
+                            type="text" 
+                            placeholder="Frekvencia" 
+                            value={ujRadio.frekvencia}
+                            onChange={(e) => setUjRadio({...ujRadio, frekvencia: e.target.value})}
+                            required 
+                            style={{padding: '8px', marginRight: '10px'}}
+                        />
+                        <button type="submit" style={{padding: '8px 15px', cursor: 'pointer', backgroundColor: '#FF6600', color: 'white', border: 'none'}}>
+                            Hozzáadás
+                        </button>
+                    </form>
+
+                    <table border="1" style={{width: '100%', borderCollapse: 'collapse'}}>
+                        <thead>
+                            <tr style={{backgroundColor: '#FF6600', color: 'white'}}>
+                                <th style={{padding: '10px'}}>Név</th>
+                                <th style={{padding: '10px'}}>Frekvencia (MHz)</th>
+                                <th style={{padding: '10px'}}>Művelet</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {radiok.map(r => (
+                                <tr key={r.id}>
+                                    <td style={{padding: '10px'}}>{r.nev}</td>
+                                    <td style={{padding: '10px'}}>{r.frekvencia}</td>
+                                    <td style={{padding: '10px'}}>
+                                        <button 
+                                            onClick={() => handleTorles(r.id)}
+                                            style={{backgroundColor: '#cc0000', color: 'white', border: 'none', padding: '5px 10px', cursor: 'pointer'}}
+                                        >
+                                            Törlés
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<AxiosApp />);
+    </script>
+</body>
+</html>
