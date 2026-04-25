@@ -41,7 +41,6 @@
     <script type="text/babel">
         const { useState, useEffect } = React;
 
-        // A te saját MockAPI végpontod
         const API_URL = "https://69ecc496af4ff533142b58b0.mockapi.io/radiok";
 
         function AxiosApp() {
@@ -49,7 +48,6 @@
             const [ujRadio, setUjRadio] = useState({ nev: '', frekvencia: '' });
             const [loading, setLoading] = useState(true);
 
-            // ADATOK LEKÉRÉSE (READ)
             const adatokBetoltese = async () => {
                 try {
                     const response = await axios.get(API_URL);
@@ -65,19 +63,17 @@
                 adatokBetoltese();
             }, []);
 
-            // HOZZÁADÁS (CREATE)
             const handleSubmit = async (e) => {
                 e.preventDefault();
                 try {
                     await axios.post(API_URL, ujRadio);
                     setUjRadio({ nev: '', frekvencia: '' });
-                    adatokBetoltese(); // Frissítés a szerverről
+                    adatokBetoltese();
                 } catch (error) {
                     alert("Hiba a mentésnél!");
                 }
             };
 
-            // TÖRLÉS (DELETE)
             const handleTorles = async (id) => {
                 if (confirm("Biztosan törlöd a rádiót?")) {
                     try {
